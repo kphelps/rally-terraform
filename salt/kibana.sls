@@ -11,7 +11,7 @@ install kibana:
     - mode: 644
     - template: jinja
     - context:
-        elasticsearch_host: pillar['elasticsearch_host']
+        elasticsearch_host: {{ pillar['elasticsearch_host'] }}
 
 kibana:
   service.running:

@@ -11,7 +11,7 @@ install rally:
     - template: jinja
     - makedirs: True
     - context:
-        elasticsearch_host: pillar['elasticsearch_host']
+        elasticsearch_host: {{ pillar['elasticsearch_host'] }}
 
 /usr/bin/start-rallyd:
   file.managed:
