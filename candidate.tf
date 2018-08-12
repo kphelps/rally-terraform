@@ -1,5 +1,5 @@
 resource "aws_autoscaling_group" "rally_elasticsearch_nodes" {
-  name = "rally-elasticsearch-nodes"
+  name_prefix = "${aws_launch_template.rally_elasticsearch_node.name}--"
   max_size = "${var.elasticsearch_node_count}"
   min_size = "${var.elasticsearch_node_count}"
   desired_capacity = "${var.elasticsearch_node_count}"
@@ -16,6 +16,7 @@ data "template_file" "rally_elasticsearch_init" {
   vars {
     hostname = "rally-elasticsearch"
     coordinator_ip = "${aws_instance.rally_coordinator.private_ip}"
+    elasticsearch_host = "${aws_lb.rally_metrics.dns_name}"
   }
 }
 
@@ -26,7 +27,7 @@ resource "aws_launch_template" "rally_elasticsearch_node" {
   vpc_security_group_ids = [
     "${aws_security_group.rally_nodes.id}"
   ]
-  user_data = "${data.template_file.rally_elasticsearch_init.rendered}"
+  user_data = "${base64encode(data.template_file.rally_elasticsearch_init.rendered)}"
   tag_specifications {
     resource_type = "instance"
     tags {

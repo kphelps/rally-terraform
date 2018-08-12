@@ -9,6 +9,9 @@ install kibana:
     - user: root
     - group: root
     - mode: 644
+    - template: jinja
+    - context:
+        elasticsearch_host: pillar['elasticsearch_host']
 
 kibana:
   service.running:

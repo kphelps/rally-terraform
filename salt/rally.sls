@@ -8,6 +8,9 @@ install rally:
     - user: ubuntu
     - group: ubuntu
     - mode: 644
+    - template: jinja
+    - context:
+        elasticsearch_host: pillar['elasticsearch_host']
 
 /usr/bin/start-rallyd:
   file.managed:

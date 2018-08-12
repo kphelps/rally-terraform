@@ -17,21 +17,9 @@ resource "aws_security_group" "rally_nodes" {
     self = true
   }
 
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
-resource "aws_security_group" "rally_kibana_lb" {
-  name = "rally-kibana-lb"
-  description = "Kibana security group"
-
   ingress {
-    from_port = 80
-    to_port = 80
+    from_port = 22
+    to_port = 22
     protocol = "TCP"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -44,21 +32,3 @@ resource "aws_security_group" "rally_kibana_lb" {
   }
 }
 
-resource "aws_security_group" "rally_kibana" {
-  name = "rally-kibana"
-  description = "Kibana security group"
-
-  ingress {
-    from_port = 5601
-    to_port = 5601
-    protocol = "TCP"
-    security_groups = ["${aws_security_group.rally_kibana_lb.id}"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}

@@ -43,6 +43,6 @@ variable "coordinator_instance_type" {
 variable "amis" {
   type = "map"
   default = {
-    "us-east-2" = "ami-8c122be9"
+    "us-east-2" = "ami-5e8bb23b"
   }
 }

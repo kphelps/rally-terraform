@@ -3,6 +3,7 @@ data "template_file" "rally_coordinator_init" {
 
   vars {
     hostname = "rally-coordinator"
+    elasticsearch_host = "${aws_lb.rally_metrics.dns_name}"
   }
 }
 
@@ -12,7 +13,7 @@ resource "aws_instance" "rally_coordinator" {
   vpc_security_group_ids = [
     "${aws_security_group.rally_nodes.id}"
   ]
-  user_data = "${data.template_file.rally_coordinator_init.rendered}"
+  user_data = "${base64encode(data.template_file.rally_coordinator_init.rendered)}"
   tags {
     Name = "rally-coordinator"
   }
