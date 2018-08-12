@@ -79,7 +79,7 @@ resource "aws_autoscaling_group" "rally_metrics_nodes" {
   target_group_arns = ["${aws_lb_target_group.rally_metrics_target.arn}"]
   launch_template = {
     id = "${aws_launch_template.rally_metrics_node.id}"
-    version = "$$Latest"
+    version = "${aws_launch_template.rally_metrics_node.latest_version}"
   }
 }
 

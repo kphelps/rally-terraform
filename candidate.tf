@@ -6,7 +6,7 @@ resource "aws_autoscaling_group" "rally_elasticsearch_nodes" {
   vpc_zone_identifier = ["${data.aws_subnet_ids.azs.ids}"]
   launch_template = {
     id = "${aws_launch_template.rally_elasticsearch_node.id}"
-    version = "$$Latest"
+    version = "${aws_launch_template.rally_elasticsearch_node.latest_version}"
   }
 }
 

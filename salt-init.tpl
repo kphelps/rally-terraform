@@ -23,7 +23,7 @@ EOF
 
 sudo apt install -y git
 git clone https://github.com/kphelps/rally-terraform.git
-cp -r rally-terraform/salt /srv/salt
+cp -r rally-terraform/salt/* /srv/salt/
 curl -L https://bootstrap.saltstack.com -o bootstrap_salt.sh
 sudo sh bootstrap_salt.sh
 sudo salt-call --local state.apply

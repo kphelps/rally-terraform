@@ -9,6 +9,7 @@ install rally:
     - group: ubuntu
     - mode: 644
     - template: jinja
+    - makedirs: True
     - context:
         elasticsearch_host: pillar['elasticsearch_host']
 

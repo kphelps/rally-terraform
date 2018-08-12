@@ -79,7 +79,7 @@ resource "aws_autoscaling_group" "rally_kibana_nodes" {
   target_group_arns = ["${aws_lb_target_group.rally_kibana_target.arn}"]
   launch_template = {
     id = "${aws_launch_template.rally_kibana_node.id}"
-    version = "$$Latest"
+    version = "${aws_launch_template.rally_kibana_node.latest_version}"
   }
 }
 
@@ -95,7 +95,7 @@ data "template_file" "rally_kibana_init" {
 resource "aws_launch_template" "rally_kibana_node" {
   name_prefix = "rally-kibana"
   image_id = "${lookup(var.amis, var.aws_region)}"
-  instance_type = "${var.metrics_instance_type}"
+  instance_type = "${var.kibana_instance_type}"
   user_data = "${base64encode(data.template_file.rally_kibana_init.rendered)}"
   vpc_security_group_ids = [
     "${aws_security_group.rally_nodes.id}",
